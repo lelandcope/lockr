@@ -1,3 +1,5 @@
+#### NOTE: This version removes all the prefixing with `{ data: value }` which fixes the issue of pulling data that was set by a different library.
+
 ![Lockr logo](http://i.imgur.com/m5kPjkB.png)
 
 > A minimal API wrapper for localStorage. Simple as your high-school locker.
