@@ -54,7 +54,7 @@
     var query_key = this._getPrefixedKey(key, options);
 
     try {
-      localStorage.setItem(query_key, JSON.stringify({"data": value}));
+      localStorage.setItem(query_key, JSON.stringify(value));
     } catch (e) {
       if (console) console.warn("Lockr didn't successfully save the '{"+ key +": "+ value +"}' pair, because the localStorage is full.");
     }
@@ -67,18 +67,18 @@
     try {
       value = JSON.parse(localStorage.getItem(query_key));
     } catch (e) {
-            if(localStorage[query_key]) {
-              value = {data: localStorage.getItem(query_key)};
-            } else{
-                value = null;
-            }
+      if(localStorage[query_key]) {
+        value = localStorage.getItem(query_key);
+      } else{
+          value = null;
+      }
     }
-    
+
     if(!value) {
       return missing;
     }
-    else if (typeof value === 'object' && typeof value.data !== 'undefined') {
-      return value.data;
+    else {
+      return value;
     }
   };
 
@@ -94,7 +94,7 @@
 
     try {
       values.push(value);
-      json = JSON.stringify({"data": values});
+      json = JSON.stringify(values);
       localStorage.setItem(query_key, json);
     } catch (e) {
       console.log(e);
@@ -111,8 +111,8 @@
     } catch (e) {
       value = null;
     }
-    
-    return (value && value.data) ? value.data : [];
+
+    return value || [];
   };
 
   Lockr.sismember = function(key, value, options) {
@@ -165,7 +165,7 @@
     if (index > -1)
       values.splice(index, 1);
 
-    json = JSON.stringify({"data": values});
+    json = JSON.stringify(values);
 
     try {
       localStorage.setItem(query_key, json);
@@ -176,7 +176,7 @@
 
   Lockr.rm =  function (key) {
     var queryKey = this._getPrefixedKey(key);
-    
+
     localStorage.removeItem(queryKey);
   };
 
